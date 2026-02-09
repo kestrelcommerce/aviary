@@ -51,11 +51,11 @@ Until/if we tag a release, you will need to edit your project `composer.json` as
 ```json
 {
    "require": {
-      "kestrelwp/aviary": "dev-main"
+      "kestrelcommerce/aviary": "dev-main"
    },
    "config": {
       "allow-plugins": {
-         "kestrelwp/aviary": true
+         "kestrelcommerce/aviary": true
       }
    },
 }
@@ -228,8 +228,8 @@ jobs:
           php_extensions: json
           version: 2
           dev: no
-      - run: composer global config --no-plugins allow-plugins.kestrelwp/aviary true
-      - run: composer global require kestrelwp/aviary
+      - run: composer global config --no-plugins allow-plugins.kestrelcommerce/aviary true
+      - run: composer global require kestrelcommerce/aviary
       - run: sudo chown -R $USER:$USER $GITHUB_WORKSPACE/vendor
       - run: composer install --no-dev --optimize-autoloader
 

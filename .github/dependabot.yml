@@ -12,4 +12,4 @@ updates:
     allow:
       - dependency-name: "johnpbloch/wordpress"
       - dependency-name: "wpackagist-plugin/woocommerce"
-      - dependency-name: "kestrelwp/php-scoper-phar"
+      - dependency-name: "kestrelcommerce/php-scoper-phar"

@@ -1,5 +1,5 @@
 {
-  "name": "kestrelwp/aviary",
+  "name": "kestrelcommerce/aviary",
   "description": "A Composer plugin for isolating dependencies for WordPress plugins and themes.",
   "type": "composer-plugin",
   "autoload": {
@@ -31,7 +31,7 @@
   "require": {
     "php": "^8.2",
     "composer-plugin-api": "^2.3",
-    "composer/composer": "^2.7.6",
+    "composer/composer": "^2.9",
     "humbug/php-scoper": "^0.18.15"
   },
   "require-dev": {

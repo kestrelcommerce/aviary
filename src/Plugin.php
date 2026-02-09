@@ -252,7 +252,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface {
 
 	private function createPath( array $parts, bool $in_root = false ): string {
 
-		$vendor = strpos( dirname( __DIR__ ), 'vendor' . DIRECTORY_SEPARATOR . 'kestrelwp' . DIRECTORY_SEPARATOR . 'aviary' );
+		$vendor = strpos( dirname( __DIR__ ), 'vendor' . DIRECTORY_SEPARATOR . 'kestrelcommerce' . DIRECTORY_SEPARATOR . 'aviary' );
 
 		if ( ! $in_root || ! is_int( $vendor ) ) {
 			return dirname( __DIR__ ) . DIRECTORY_SEPARATOR . join( DIRECTORY_SEPARATOR, $parts );
