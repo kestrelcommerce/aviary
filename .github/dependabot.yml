@@ -8,8 +8,30 @@ updates:
   - package-ecosystem: "composer"
     directory: "/"
     schedule:
-      interval: "daily"
-    allow:
-      - dependency-name: "johnpbloch/wordpress"
-      - dependency-name: "wpackagist-plugin/woocommerce"
-      - dependency-name: "kestrelcommerce/php-scoper-phar"
+      interval: "weekly"
+      day: "monday"
+    groups:
+      # WordPress and WooCommerce drive the symbols database, so they get their own pull requests (see .github/extract-symbols.yml).
+      # Everything else is # batched into a single weekly pull request to keep the volume down.
+      composer-deps:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "johnpbloch/wordpress"
+          - "wpackagist-plugin/woocommerce"
+    ignore:
+      # PHPUnit 12 requires PHP >= 8.3 and PHPUnit 13 requires PHP >= 8.4.1, but Aviary supports PHP ^8.2 and CI runs on 8.2.
+      # Remove this once the PHP floor is raised.
+      - dependency-name: "phpunit/phpunit"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      day: "monday"
+    groups:
+      # Actions are pinned to commit hashes; Dependabot bumps the hash and rewrites the trailing version comment.
+      github-actions:
+        patterns:
+          - "*"
