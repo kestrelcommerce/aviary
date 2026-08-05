@@ -1,5 +1,65 @@
-.DS_Store
-/.idea/
-/sources/
-/vendor/
+# Code editors
+*.sublime-project
+*.sublime-workspace
+.buildpath
+.idea
+.phpactor.json
+.project
+.settings*
+.sublimelinterrc
+.vscode/*
+/nbproject/private/
+project.properties
+project.xml
+
+# AI assistants and tools
+/docs/**
+.claude/docs/
 .claude/settings.local.json
+.gemini/settings.json
+.cursorignore
+.cursorindexingignore
+.cursor/rules/custom-*
+.cursor/rules/local-*
+
+# Temporary files
+*.bak
+/.tmp-**
+/.temp-**
+/tmp-**
+/temp-**
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+phpcs-report.xml
+test-results
+
+# Caches
+*.cache
+
+# Local dev config
+.env
+.env.local
+.env.dev
+.env.development
+
+# Sass
+.sass-cache/
+
+# Node modules
+/node_modules/
+
+# Composer & PHP Scoper
+/vendor/
+
+# Test artifacts and support files
+.phpunit
+.phpunit.cache
+.phpunit.result.cache
+
+# Aviary compiled sources
+/sources
