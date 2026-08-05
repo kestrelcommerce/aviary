@@ -1,3 +1,5 @@
+# WordPress and WooCommerce symbols updater.
+#
 # Keeps the symbols database (symbols/wordpress.php, symbols/woocommerce.php) in sync with the
 # WordPress and WooCommerce versions pinned in composer.json.
 #
