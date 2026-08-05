@@ -10,9 +10,10 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
+    versioning-strategy: "increase"
     groups:
-      # WordPress and WooCommerce drive the symbols database, so they get their own pull requests (see .github/extract-symbols.yml).
-      # Everything else is # batched into a single weekly pull request to keep the volume down.
+      # WordPress and WooCommerce drive the symbols database, so they get their own pull requests (see .github/workflows/extract-symbols.yml).
+      # Everything else is batched into a single weekly pull request to keep the volume down.
       composer-deps:
         patterns:
           - "*"

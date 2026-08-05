@@ -10,11 +10,15 @@
 # this workflow installs the new sources, regenerates both files and commits the result back onto the
 # Dependabot branch, so the symbols land in the same pull request as the version bump.
 #
-# The job condition restricts runs to Dependabot-authored pull requests, and skips any run whose head
-# commit is this workflow's own "Extract symbols" commit — otherwise pushing that commit would
-# retrigger the workflow on `synchronize` and loop. It can also be run by hand from the Actions tab
-# (workflow_dispatch), which bypasses the Dependabot check and regenerates against whatever the
-# checked-out branch has locked.
+# The job condition restricts runs to Dependabot-authored pull requests. It can also be run by hand
+# from the Actions tab (workflow_dispatch), which bypasses the Dependabot check and regenerates
+# against whatever the checked-out branch has locked.
+#
+# There is no explicit loop guard: the push below uses GITHUB_TOKEN, and GitHub does not start new
+# workflow runs for events raised by that token, so the resulting `synchronize` is a dead end.
+#
+# Dependabot-triggered runs are treated as if they came from a fork and get a read-only GITHUB_TOKEN
+# by default, which is why the `permissions: contents: write` block below is required for the push.
 
 name: Extract symbols
 
@@ -28,14 +32,15 @@ permissions:
 
 jobs:
   extract-symbols:
-    if: ${{ github.event_name == 'workflow_dispatch' || ( github.actor == 'dependabot[bot]' && !contains(github.event.head_commit.message, 'Extract symbols') ) }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.actor == 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
       # https://github.com/actions/checkout
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
+          # On workflow_dispatch there is no pull request, so fall back to the dispatched branch.
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Setup PHP
         # https://github.com/shivammathur/setup-php
@@ -53,5 +58,11 @@ jobs:
           git config --local user.email "${{ github.actor }}@users.noreply.github.com"
           git config --local user.name "${{ github.actor }}"
           git add -A
+          # Most Dependabot pull requests touch neither WordPress nor WooCommerce, so the symbols are
+          # unchanged and there is nothing to commit. Exit quietly instead of failing the job.
+          if git diff --staged --quiet; then
+            echo "Symbols unchanged, nothing to commit."
+            exit 0
+          fi
           git commit -m "Extract symbols"
           git push
