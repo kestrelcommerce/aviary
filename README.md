@@ -1,5 +1,7 @@
 # Aviary - A PHP scoper for WordPress plugins and themes
 
+> **Read-only mirror.** The source of truth for this code is `tools/aviary` in [kestrelcommerce/woo-plugins](https://github.com/kestrelcommerce/woo-plugins). `kestrelcommerce/aviary` is updated automatically from there and must not receive direct pushes or pull requests; open them against woo-plugins instead.
+
 Aviary is a Composer plugin that scopes (isolates) your dependencies for WordPress plugins and themes.
 Under the hood, it uses the latest version of [PHP Scoper](https://github.com/humbug/php-scoper). The implementation is based on  [WPify Scoper](https://github.com/wpify/scoper), which we modified to fit the Kestrel workflow.
 
