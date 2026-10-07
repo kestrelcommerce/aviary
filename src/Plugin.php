@@ -283,6 +283,12 @@ class Plugin implements PluginInterface, EventSubscriberInterface {
 		$output      = new ConsoleOutput();
 		$application = new Application();
 
+		// Symfony Console's Application::run() calls exit() once the command finishes unless auto-exit is disabled.
+		// This nested install runs inside the outer Composer process, during its post-install-cmd event: letting it exit
+		// kills every listener queued after this plugin (the PHPCS installer that registers coding standards, the project's
+		// own post-install-cmd scripts), which is why a fresh `composer install` used to leave phpcs standards unregistered.
+		$application->setAutoExit( false );
+
 		return $application->run(
 			new ArrayInput(
 				[
