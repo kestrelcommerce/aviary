@@ -202,7 +202,12 @@ class Plugin implements PluginInterface, EventSubscriberInterface {
 			$useDevDependencies = false;
 		}
 
-		$this->runInstall( $source, $command, $useDevDependencies );
+		$exit_code = $this->runInstall( $source, $command, $useDevDependencies );
+
+		// The nested install reports through its own exit code only. Swallowing it let a plugin build finish without vendor-scoped/ and ship a zip that fatals on load.
+		if ( 0 !== $exit_code ) {
+			throw new RuntimeException( sprintf( 'Aviary: the scoped dependency %s failed with exit code %d; vendor-scoped/ is incomplete.', $command, $exit_code ) );
+		}
 	}
 
 	private function createPhpScoperConfig( string $path, string $source, string $destination ): array|string
