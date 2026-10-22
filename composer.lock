@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a5ed2c59473c4ccae5623831999d8d5",
+    "content-hash": "9831ff376159c2cddaa76ef0490177b5",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -5164,15 +5164,15 @@
         },
         {
             "name": "wpackagist-plugin/woocommerce",
-            "version": "11.0.0",
+            "version": "11.2.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/woocommerce/",
-                "reference": "tags/11.0.0"
+                "reference": "tags/11.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/woocommerce.11.0.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/woocommerce.11.2.1.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
