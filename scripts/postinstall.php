@@ -35,6 +35,7 @@ $composer_lock = '%%composer_lock%%';
 $vendor_scoped = '%%vendor_scoped%%';
 $temp          = '%%temp%%';
 $prefix        = strtolower( preg_replace( "/[[a-zA-Z0-9]+]/", '', '%%prefix%%' ) );
+$namespace_prefix = '%%prefix%%';
 
 // fix static files autoloader
 $autoload_static_path = path( $destination, 'vendor', 'composer', 'autoload_static.php' );
@@ -46,6 +47,17 @@ $autoload_static      = preg_replace(
 );
 
 file_put_contents( $autoload_static_path, $autoload_static );
+
+// prefix the InstalledVersions key dump-autoload adds: it maps Composer's real class to the already loaded scoped file, so another plugin's class_exists() fatals
+$installed_versions_key = "'" . str_replace( '\\', '\\\\', $namespace_prefix ) . "\\\\Composer\\\\InstalledVersions'";
+
+foreach ( [ 'autoload_classmap.php', 'autoload_static.php' ] as $autoload_file ) {
+	$autoload_path = path( $destination, 'vendor', 'composer', $autoload_file );
+	$autoload      = file_get_contents( $autoload_path );
+	$autoload      = str_replace( "'Composer\\\\InstalledVersions'", $installed_versions_key, $autoload );
+
+	file_put_contents( $autoload_path, $autoload );
+}
 
 // copy composer.lock
 remove( path( $cwd, $composer_lock ) );
